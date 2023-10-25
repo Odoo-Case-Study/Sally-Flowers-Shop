@@ -1,0 +1,142 @@
+<odoo>
+    <data>
+        <record id="flower_sale_order_paperformat" model="report.paperformat">
+            <field name="name">flower_sale_order_paperformat</field>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="flowers_shop_module.flower_sale_order_report"
+                model="sale.order"
+                string="Flower Sale Order"
+                report_type="qweb-pdf"
+                name="flowers_shop_module.report_flower_sale_order"
+                file="flowers_shop_module.report_flower_sale_order"
+        />
+
+        <record id="flowers_shop_module.flower_sale_order_report_action" model="ir.actions.report">
+            <field name="name">flower_sale_order_paperformat</field>
+            <field name="model">sale.order</field>
+            <field name="report_name">flower_sale_order_paperformat</field>
+            <field name="paperformat_id" ref="flowers_shop_module.flower_sale_order_paperformat"/>
+        </record>
+
+
+        <template id="report_flower_sale_order">
+            <t t-call="web.html_container">
+                <t t-call="flowers_shop_module.report_flower_sale_order_document" />
+            </t>
+        </template>
+
+    <template id="flowers_shop_module.report_flower_sale_order_document">
+        <t t-set="report_header_style" t-value="'display: none;'"/>
+        <t t-set="footer" t-value="'oe_hidden'"/>
+        <t t-call="web.external_layout">
+            <div class="page">
+                <center><strong t-esc="docs[0].company_id.name"/></center>
+            </div>
+            <p style="page-break-after:always;"></p>
+            <t t-foreach="docs.order_line.product_id.flower_id" t-as="flower">
+                <div class="page">
+                    <h2>
+                        <span>Flower Product</span>
+                    </h2>
+                    <table border="1" style="width:100%;">
+                        <thead >
+                            <th><center>Common Name</center></th>
+                            <th><center>Scientific Name</center></th>
+                            <th><center>Season Start</center></th>
+                            <th><center>Season End</center></th>
+                            <th><center>Watering Frequency</center></th>
+                            <th><center>Watering Amount (ml)</center></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td name="td_name"><center><span t-field="flower.common_name"/></center></td>
+                                <td name="td_name"><center><span t-field="flower.scientific_name"/></center></td>
+                                <td name="td_name"><center><span t-field="flower.season_start"/></center></td>
+                                <td name="td_name"><center><span t-field="flower.season_end"/></center></td>
+                                <td name="td_name"><center><span t-field="flower.watering_frequency"/></center></td>
+                                <td name="td_name"><center><span t-field="flower.watering_amount_ml"/></center></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="page-break-after:always;"></p>
+                </div>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>
+
+
+
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<odoo>-->
+<!--    <template id="report_flower_sale_order">-->
+<!--&lt;!&ndash;        <t t-call="web.basic_layout">&ndash;&gt;-->
+<!--&lt;!&ndash;         <t t-call="web.html_container">&ndash;&gt;-->
+<!--        <t t-call="web.basic_layout">-->
+<!--            <t t-set="company" t-value="docs[0].company_id"/>-->
+<!--            <t t-set="report_header_style" t-value="'display: none;'"/>-->
+<!--            <t t-set="footer" t-value="'oe_hidden'"/>-->
+<!--            <t t-call="web.external_layout_boxed">-->
+<!--         &lt;!&ndash; Paper Format &ndash;&gt;-->
+<!--                <div class="page">-->
+<!--                    <div class="content">-->
+<!--                        <h2>Sally Flowers Shop</h2>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Loop through each flower in the order &ndash;&gt;-->
+<!--                <t t-foreach="docs.order_line.product_id.flower_id" t-as="flower">-->
+<!--                    <div class="page">-->
+<!--                        <div class="content">-->
+<!--                            &lt;!&ndash; Flower Information &ndash;&gt;-->
+<!--                            <h2>Flower Information</h2>-->
+<!--                            <table>-->
+<!--                                &lt;!&ndash; Loop through the fields/attributes of the flower &ndash;&gt;-->
+<!--&lt;!&ndash;                                <t t-foreach="order.flower_ids" t-as="flower">&ndash;&gt;-->
+<!--                                    <tr>-->
+<!--                                         <t t-set="common_name" t-value="flower.common_name"/>-->
+<!--                                        <td><b>Common Name:</b></td>-->
+<!--                                        <td><t t-esc="flower.common_name" /></td>-->
+<!--                                         <td><b>Season Start:</b></td>-->
+<!--                                        <td><t t-esc="flower.season_start" /></td>-->
+<!--                                         <td><b>Watering Frequency:</b></td>-->
+<!--                                        <td><t t-esc="flower.watering_frequency" /></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                         <td><b>Scientific Name:</b></td>-->
+<!--                                        <td><t t-esc="flower.scientific_name" /></td>-->
+<!--                                        <td><b>Season End:</b></td>-->
+<!--                                        <td><t t-esc="flower.season_end" /></td>-->
+<!--                                        <td><b>Watering Amount (ml):</b></td>-->
+<!--                                        <td><t t-esc="flower.watering_amount_ml" /></td>-->
+<!--                                    </tr>-->
+
+<!--&lt;!&ndash;                                </t>&ndash;&gt;-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--             </t>-->
+<!--            </t>-->
+<!--    </template>-->
+
+<!--     <record id="action_flower_sale_order_report" model="ir.actions.report">-->
+<!--        <field name="name">Flower Sale Order Report</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">flowers_shop_module.report_flower_sale_order</field>-->
+<!--         <field name="report_file">flowers_shop_module.report_flower_sale_order</field>-->
+
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="binding_type">report</field>-->
+<!--        <field name="paperformat_id" ref="paperformat_flower_sale_order"/>-->
+<!--    </record>-->
+<!--</odoo>-->
