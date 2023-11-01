@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="product_product_only_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.inherit.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"></field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='options']" position="inside">
+
+                     <span class="d-inline-block">
+                            <field name="is_flower"/>
+                            <label for="is_flower"/>
+                         <field name="needs_watering" invisible="1"/>
+                    </span>
+                    <group>
+
+                          <field name="gardeners_ids"></field>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="after">
+                     <field name="flower_id"></field>
+                 </xpath>
+                 <xpath expr="//field[@name='name']" position='before'>
+                     <widget name="web_ribbon" title="Needs Watering" bg_color="bg-danger"  attrs="{'invisible': [('needs_watering', '!=', True)]}"/>
+        </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

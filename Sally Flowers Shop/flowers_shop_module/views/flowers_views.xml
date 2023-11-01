@@ -1,0 +1,123 @@
+<!-- my_module/views/flowers_views.xml -->
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="flowers_list_views">
+            <field name="name">flower.list</field>
+            <field name="model">flowers_shop_module.flower</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="common_name"/>
+                    <field name="scientific_name"/>
+                    <field name="season_start"/>
+                    <field name="season_end" />
+                    <field name="watering_frequency"/>
+                    <field name="watering_amount_ml"/>
+<!--                    <field name="water_full_amount"/>-->
+<!--                    <field name="season"/>-->
+<!--                    <field name="creater_user_id" />-->
+<!--                    <field name="models_id"/>-->
+<!--                    <field name="name"/>-->
+<!--                    <field name="activity_ids" />-->
+<!--                    <field name="state"-->
+<!--                         />-->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="flowers_form_views">
+            <field name="name">flower.form</field>
+            <field name="model">flowers_shop_module.flower</field>
+            <field name="arch" type="xml">
+
+                <form>
+                    <sheet>
+<!--                        <div>-->
+<!--                            <h2>-->
+<!--                                <field name="priority" />-->
+<!--                            </h2>-->
+<!--                        </div>-->
+
+                        <group>
+                            <group>
+                                <field name="common_name" required="1"/>
+                                <field name="scientific_name"/>
+                                <field name="season_start" required="1"/>
+                                <field name="season_end" required="1"/>
+<!--                                <field name="creater_user_id" required="1" />-->
+<!--                                <field name="models_id"/>-->
+<!--                                <field name="name"/>-->
+                            </group>
+                            <group>
+                                <field name="watering_frequency" />
+                                <field name="watering_amount_ml"/>
+<!--                                <field name="water_full_amount"/>-->
+<!--                                <field name="active"/>-->
+<!--                                <field name="season"/>-->
+
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+
+
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="flowers_list_views_search">
+            <field name="name">flower.list.search</field>
+            <field name="model">flowers_shop_module.flower</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="common_name"
+                           filter_domain="['|', ('common_name','ilike',self), ('scientific_name','ilike',self)]"
+                           string="name"/>
+                    <field name="common_name"/>
+                    <field name="scientific_name"/>
+                    <filter name="filter_common_name_orchid" string="Orchid Name"
+                            domain="[('common_name','=','Orchid')]"/>
+                    <filter name="filter_common_name_rose" string="Rose Name" domain="[('common_name','=','Rose')]"/>
+                    <separator/>
+                    <filter name="filter_watering_amount_ml" string="watering Amount >= 10"
+                            domain="[('watering_amount_ml','&gt;=',20)]"/>
+                    <separator/>
+<!--                    <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>-->
+
+                    <group expand="0" string="Group By">
+                        <filter string="Common Name" name="group_common_name" domain="[]"
+                                context="{'group_by': 'common_name'}"/>
+                    </group>
+
+<!--                    <searchpanel>-->
+<!--                        <field name="season" icon="fa-building" select="multi" enable_counters="1"/>-->
+<!--                    </searchpanel>-->
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_flower">
+            <field name="name">Flowers</field>
+            <field name="res_model">flowers_shop_module.flower</field>
+            <field name="view_mode">tree,form</field>
+<!--            <field name="context">{'default_common_name':'Common Name','default_scientific_name':'Scientific-->
+<!--                Name','search_default_filter_common_name_orchid':1,'search_default_group_common_name':1}-->
+<!--            </field>-->
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Help</p>
+            </field>
+        </record>
+
+<!--        <menuitem-->
+<!--                id="menu_flower"-->
+<!--                name="Flowers"-->
+<!--                sequence="1"-->
+<!--                action="flowers_shop_module.action_flower"/>-->
+        <menuitem id="menu_flower_1" name="Sally Flowers Shop" sequence="-100"
+                          web_icon="flowers_shop_module,static/description/icon.png" action="action_flower"/>
+    </data>
+</odoo>
