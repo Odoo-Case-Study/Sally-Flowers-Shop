@@ -1,0 +1,20 @@
+
+ <odoo>
+    <data>
+            <record model="ir.actions.act_window" id="action_flower_product">
+                <field name="name">Flowers Products</field>
+                <field name="res_model">product.product</field>
+                <field name="view_mode">kanban,tree,form,activity</field>
+               <field name="context">{'search_default_group_is_flower':0}</field>
+                <field name="domain">[('is_flower', '=', True)]</field>
+                <field name="help" type="html">
+                    <p class="o_view_nocontent_smiling_face">Help Please</p>
+                </field>
+        </record>
+
+
+         <menuitem name="Flower Products" id="menu_product_flower_view"
+                   action="action_flower_product"
+                   parent="sale.product_menu_catalog"   sequence="20"/>
+    </data>
+</odoo>
