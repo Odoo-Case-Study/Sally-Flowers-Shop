@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Sally Flower Shop ",
-    'sequence': -11,
     'summary': """
         Sally flowers shop.... Case Study""",
 
@@ -19,13 +18,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale','product','sale_management','website','stock'],
+    'depends': ['sale','product','sale_management','website','stock','website_sale'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        # 'views/views.xml',
-        # 'views/templates.xml',
         'views/flowers_views.xml',
         'views/product_inherit_view.xml',
         'views/product_flower_view.xml',
