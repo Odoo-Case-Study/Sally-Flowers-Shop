@@ -12,18 +12,16 @@ class Product(models.Model):
 
     is_flower = fields.Boolean("Is Flower Product?",default=False)
     flower_id = fields.Many2one('flowers_shop_module.flower',string="Flower Product")
-    needs_watering =fields.Boolean("Needs Watering",default=False)#,compute='_compute_needs_watering')
+    needs_watering =fields.Boolean("Needs Watering",default=False)
     sequence_id = fields.Many2one("ir.sequence", "Flower Sequence")
     gardeners_ids = fields.Many2many('res.users', string="Gardeners Users")
-    # @api.depends('serial_id')
-    # def _compute_needs_watering(self):
-    #     print("_compute_needs_watering",self.needs_watering)
+   
 
     def action_needs_watering(self):
         flowers = self.env["product.product"].search([("is_flower", "=", True)])
-        print("flowers",flowers)
+     
         serials = self.env["stock.lot"].search([("product_id", "in", flowers.ids)])
-        print("serials",serials)
+     
         lot_vals = defaultdict(bool)
         for serial in serials:
             if serial.water_ids:
@@ -37,5 +35,5 @@ class Product(models.Model):
         for flower in flowers:
             flower.needs_watering = lot_vals[flower.id]
 
-        print("lot_vals",lot_vals)
+  
 
