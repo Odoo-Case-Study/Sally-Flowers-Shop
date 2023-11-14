@@ -1,5 +1,5 @@
 from odoo import models, fields
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 import requests
 
 
@@ -12,9 +12,9 @@ class StockWarehouse(models.Model):
     def _get_api_key_and_location(self, show_error):
         api_key = self.env["ir.config_parameter"].sudo().get_param("flowers_shop_module.weather_api_key")
         if api_key == "unset" or not api_key:
-            raise ValidationError("Please Make sure you set a working API key!")
+            raise UserError("Please Make sure you set a working API key!")
         if not self.partner_id or not self.partner_id.partner_latitude or not self.partner_id.partner_longitude:
-            raise ValidationError("Unable to retrieve warehouse location, could be because the warehouse doesn't exist")
+            raise UserError("Unable to retrieve warehouse location, could be because the warehouse doesn't exist")
         return api_key, self.partner_id.partner_latitude, self.partner_id.partner_longitude
 
     def get_weather(self, show_error=True):
@@ -36,7 +36,7 @@ class StockWarehouse(models.Model):
                 "capture_time": fields.Datetime.now(),
             })
         except Exception as e:
-            raise ValidationError(str(e))
+            raise UserError(str(e))
 
     def get_weather_all_warehouses(self):
         for warehouse in self.search([]):
@@ -66,7 +66,7 @@ class StockWarehouse(models.Model):
                     ])
                     flower_serials_to_water |= quants.lot_id
             except Exception as e:
-                raise ValidationError(str(e))
+                raise UserError(str(e))
         for flower_serial in flower_serials_to_water:
             self.env["flower.water"].create({
                 "serial_id": flower_serial.id,

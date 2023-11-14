@@ -5,7 +5,6 @@
         <field name="format">custom</field>
          <field name="page_width">7</field>
         <field name="page_height">7</field>
-<!--        <field name="format">A4</field>-->
         <field name="margin_top">0</field>
         <field name="margin_bottom">0</field>
         <field name="margin_left">0</field>
