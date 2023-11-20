@@ -4,7 +4,14 @@
        <record id="flowers_access_rule" model="ir.rule">
             <field name="name">Flowers Access Rule</field>
             <field name="model_id" ref="model_product_product"/>
-            <field name="domain_force">[(1,'=',1)] if user.user_has_groups('flowers_shop_module.group_gardener') else [('is_flower','=',False)]</field>
+            <field name="domain_force">[
+                '|',
+                '&amp', ('is_flower', '=', False), ('flower_id', '=', False),  # A: Normal products that ARE NOT flowers
+                '&amp', ('flower_id', '!=', False),
+                     '|', ('gardeners_ids', '=', []),  # B: Flower products that have NO gardeners
+                          ('gardeners_ids', 'in', [user.id])  # C: Flower products for which the user is ONE of the gardeners
+                ] if user.has_group('flowers_shop_module.group_gardener') else [('is_flower', '=', False)]
+            </field>
             <field name="groups" eval="[(4, ref('flowers_shop_module.group_gardener'))]"/>
         </record>
 
