@@ -6,8 +6,8 @@
             <field name="model_id" ref="model_product_product"/>
             <field name="domain_force">[
                 '|',
-                '&', ('is_flower', '=', False), ('flower_id', '=', False),  # A: Normal products that ARE NOT flowers
-                '&', ('flower_id', '!=', False),
+                '&amp', ('is_flower', '=', False), ('flower_id', '=', False),  # A: Normal products that ARE NOT flowers
+                '&amp', ('flower_id', '!=', False),
                      '|', ('gardeners_ids', '=', []),  # B: Flower products that have NO gardeners
                           ('gardeners_ids', 'in', [user.id])  # C: Flower products for which the user is ONE of the gardeners
                 ] if user.has_group('flowers_shop_module.group_gardener') else [('is_flower', '=', False)]
